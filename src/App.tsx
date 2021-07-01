@@ -62,7 +62,8 @@ const theme: Theme = createMuiTheme({
 				'*': {
 					boxSizing: 'border-box',
 					margin: 0,
-					padding: 0
+					padding: 0,
+					'-webkit-tap-highlight-color': 'transparent'
 				},
 				img: {
 					pointerEvents: 'none',
