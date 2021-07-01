@@ -45,7 +45,7 @@ const useStyles = makeStyles({
 		position: 'absolute',
 		inset: 0,
 		overflow: 'hidden',
-		zIndex: 1000
+		zIndex: 1001
 	},
 	backDrop: {
 		height: '100%',
