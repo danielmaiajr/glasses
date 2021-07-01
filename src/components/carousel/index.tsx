@@ -15,8 +15,8 @@ import Dots from './dots';
 import { clamp, ItemSlidesToShow, BreakpointTypes } from './_utils';
 
 interface PropTypes {
-	breakPoints: BreakpointTypes[];
-	isInfinite: boolean;
+	breakPoints?: BreakpointTypes[];
+	isInfinite?: boolean;
 	children: JSX.Element[];
 }
 
@@ -34,9 +34,9 @@ const Carousel = ({
 		{ width: 1, itemsToShow: 1 },
 		{ width: 550, itemsToShow: 2 },
 		{ width: 850, itemsToShow: 3 },
-		{ width: 1150, itemsToShow: 4 },
-		{ width: 1450, itemsToShow: 5 },
-		{ width: 1750, itemsToShow: 6 }
+		{ width: 1150, itemsToShow: 3 },
+		{ width: 1450, itemsToShow: 3 },
+		{ width: 1750, itemsToShow: 3 }
 	],
 	isInfinite = true,
 	children
@@ -105,7 +105,7 @@ const Carousel = ({
 
 			newSpring.start((i) => {
 				if (!active) return { scale: 1, opacity: 1 };
-				return { scale: active && i === index ? 1.2 : 0.9, opacity: active && i !== index ? 0.5 : 1 };
+				return { scale: active && i === index ? 1.1 : 1, opacity: active && i !== index ? 0.5 : 1 };
 			});
 		},
 		{ axis: 'x' }
