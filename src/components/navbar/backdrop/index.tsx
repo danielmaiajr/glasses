@@ -97,7 +97,10 @@ const useStyles = makeStyles((theme: Theme) => ({
 		fontSize: 10,
 		fontWeight: 'bold',
 		color: '#AAA',
-		textTransform: 'uppercase'
+		textTransform: 'uppercase',
+		[theme.breakpoints.down('sm')]: {
+			display: 'none'
+		}
 	},
 	menuWrapper: {
 		display: 'flex'
@@ -118,10 +121,10 @@ const useStyles = makeStyles((theme: Theme) => ({
 		backgroundColor: '#d13939'
 	},
 	backdropWrapper: {
-		position: 'fixed',
+		position: 'absolute',
 		overflow: 'hidden',
 		width: '100%',
-		top: MENU_HEIGHT + 60, //the position is Fixed, so it's in relation with the page
+		top: MENU_HEIGHT, //position absolute, it's in relation to the menuWrapper
 		left: 0,
 		backgroundColor: '#FFF',
 		color: '#000',
