@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import { useWindowSize } from 'react-use';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -100,7 +100,7 @@ const Carousel = ({
 
 	const OnDrag = useDrag(
 		({ active, args: [ index ], movement: [ mx ], direction: [ xDir ], distance }) => {
-			if (!active && distance > 100) SetCurrentIndex(-xDir);
+			if (!active && distance > 5) SetCurrentIndex(-xDir);
 			AnimateXPosition(active, mx);
 
 			newSpring.start((i) => {
@@ -173,7 +173,6 @@ const useCarouselStyles = makeStyles({
 		position: 'absolute',
 		top: 'calc(50% - 16px)',
 		left: 0,
-		zIndex: 1000,
 		backgroundColor: '#FFF',
 		border: '1px solid #CCC'
 	},
@@ -181,7 +180,6 @@ const useCarouselStyles = makeStyles({
 		position: 'absolute',
 		top: 'calc(50% - 16px)',
 		right: 0,
-		zIndex: 1000,
 		backgroundColor: '#FFF',
 		border: '1px solid #CCC'
 	}
