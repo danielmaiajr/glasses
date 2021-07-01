@@ -13,7 +13,7 @@ const Product = ({ data }: PropType): JSX.Element => {
 	return (
 		<div className={classes.wrapper}>
 			<div>
-				<img src={data.image} width="100%" alt={data.name} />
+				<img src={data.image[0]} width="100%" alt={data.name} />
 			</div>
 			<div className={clsx(classes.text, classes.textBold)}>
 				{data.brand} - {data.model}
