@@ -21,7 +21,7 @@ const CarouselSection = ({ title, subtitle, products }: PropTypes): JSX.Element 
 				<div className={classes.title}>{title}</div>
 				<div className={classes.subtitle}>{subtitle}</div>
 			</div>
-			<Carousel>{products.map((prod) => <Product data={prod} />)}</Carousel>
+			<Carousel>{products.map((prod, i) => <Product data={prod} key={i} />)}</Carousel>
 		</Container>
 	);
 };
