@@ -24,7 +24,7 @@ const MyTextField = withStyles({
 				borderColor: 'rgba(255, 255, 255, 0.2)'
 			},
 			'&.Mui-focused fieldset': {
-				borderColor: '#555',
+				borderColor: '#AAA',
 				backgroundColor: 'rgba(255, 255, 255, 0)'
 			}
 		}
