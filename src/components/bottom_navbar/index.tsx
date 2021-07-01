@@ -36,8 +36,10 @@ const useStyles = makeStyles((theme: Theme) => ({
 		left: 0,
 		width: '100%',
 		display: 'none',
-		padding: 2,
+		padding: 5,
 		borderTop: '1px solid #CCC',
+		backgroundColor: '#FFF',
+		zIndex: 1000,
 		[theme.breakpoints.down('sm')]: {
 			display: 'flex'
 		}
