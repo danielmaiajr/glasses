@@ -76,9 +76,7 @@ const Navbar = (): JSX.Element => {
 				</div>
 			</Container>
 
-			<Container className={classes.backdrop}>
-				<BackpropMenu menu={Menus} />
-			</Container>
+			<BackpropMenu menu={Menus} />
 
 			<Drawer show={showMenu} onBackDropClick={OnClickMenu} ltr>
 				Menu
@@ -150,11 +148,6 @@ const useStyles = makeStyles((theme: Theme) => ({
 		alignItems: 'center',
 		marginLeft: 50,
 		cursor: 'pointer',
-		[theme.breakpoints.down('sm')]: {
-			display: 'none'
-		}
-	},
-	backdrop: {
 		[theme.breakpoints.down('sm')]: {
 			display: 'none'
 		}
