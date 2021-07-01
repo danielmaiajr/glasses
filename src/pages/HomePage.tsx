@@ -4,14 +4,16 @@ import Navbar from '../components/navbar';
 import CarouselSection from '../components/carousel_section';
 
 import { products } from '../components/product/data';
+import CarouselDoubleSection from '../components/carousel_double_section';
 
 const HomePage = (): JSX.Element => {
 	const classes = useStyles();
 
 	return (
-		<div>
+		<div className={classes.wrapper}>
 			<Navbar />
 			<CarouselSection products={products} title="LIQUIDAÇÃO DE INVERNO" subtitle="ÓCULOS A PARTIR DE R$69,90" />
+			<CarouselDoubleSection products={products} title="Lentes Multifocal" subtitle="a partir de R$339" />
 			<CarouselSection products={products} title="MAIS VENDIDOS" subtitle="VEJA TODOS" />
 		</div>
 	);
