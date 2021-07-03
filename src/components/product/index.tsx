@@ -1,6 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import { makeStyles, Theme } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
 
 import { ProductType } from './data';
 
@@ -11,7 +12,7 @@ const Product = ({ data }: PropType): JSX.Element => {
 	const classes = useStyles();
 
 	return (
-		<div className={classes.wrapper}>
+		<Link to={`/product/${data.id}`} className={classes.wrapper}>
 			<div>
 				<img src={data.image[0]} width="100%" alt={data.name} />
 			</div>
@@ -21,8 +22,10 @@ const Product = ({ data }: PropType): JSX.Element => {
 			<div className={clsx(classes.text, classes.textSecondary)}>
 				{data.model} - {data.color}
 			</div>
-			<div className={clsx(classes.text, classes.textBold)}>R${data.price},00</div>
-		</div>
+			<div className={clsx(classes.text, classes.textBold)} style={{ color: '#555' }}>
+				R${data.price},00
+			</div>
+		</Link>
 	);
 };
 
