@@ -8,7 +8,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
 import { useSpring, useSprings, animated, config } from '@react-spring/web';
-import { useDrag } from 'react-use-gesture';
+import { useDrag } from '@use-gesture/react';
 
 import Dots from './dots';
 
@@ -99,8 +99,8 @@ const Carousel = ({
 	};
 
 	const OnDrag = useDrag(
-		({ active, args: [ index ], movement: [ mx ], direction: [ xDir ], distance }) => {
-			if (!active && distance > 5) SetCurrentIndex(-xDir);
+		({ event, active, args: [ index ], movement: [ mx ], direction: [ xDir ], distance: [ xDist ], tap }) => {
+			if (!active && xDist > 5) SetCurrentIndex(-xDir);
 			AnimateXPosition(active, mx);
 
 			newSpring.start((i) => {
@@ -108,7 +108,7 @@ const Carousel = ({
 				return { scale: active && i === index ? 1.1 : 1, opacity: active && i !== index ? 0.5 : 1 };
 			});
 		},
-		{ axis: 'x' }
+		{ axis: 'x', filterTaps: true }
 	);
 
 	console.log('carousel rendered...');
@@ -121,7 +121,13 @@ const Carousel = ({
 			<div className={classes.sliderWrapper}>
 				<animated.div className={classes.slider} style={styles} ref={carouselWidth}>
 					{newStyles.map((styles, i) => (
-						<animated.div style={styles} key={i} className={classes.slide} {...OnDrag(i)}>
+						<animated.div
+							style={styles}
+							key={i}
+							className={classes.slide}
+							{...OnDrag(i)}
+							onDragStart={(e) => e.preventDefault()}
+						>
 							{children[i]}
 						</animated.div>
 					))}
@@ -160,14 +166,13 @@ const useCarouselStyles = makeStyles({
 	slider: {
 		display: 'grid',
 		gridTemplateColumns: (props: UseCarouselStylesProps) =>
-			`repeat(${props.numberOfIndexs}, calc(100% / ${props.numberOfItemSlides}))`,
-		touchAction: 'pan-y',
-		userSelect: 'none'
+			`repeat(${props.numberOfIndexs}, calc(100% / ${props.numberOfItemSlides}))`
 	},
 	slide: {
 		display: 'flex',
 		justifyContent: 'center',
-		padding: '0 10px'
+		padding: '0 10px',
+		touchAction: 'pan-y'
 	},
 	minusButton: {
 		position: 'absolute',
