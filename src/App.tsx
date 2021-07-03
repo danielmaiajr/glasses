@@ -7,6 +7,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import HomePage from './pages/HomePage';
 import SearchPage from './pages/SearchPage';
 import CartPage from './pages/CartPage';
+import ProductPage from './pages/product_page';
+
 import BottomNav, { routesType } from './components/bottom_navbar';
 
 const routes: routesType[] = [
@@ -27,6 +29,8 @@ const routes: routesType[] = [
 	}
 ];
 
+//TODO: create a container with padding to the routes to fix the bottomTab on top of part of the layout
+
 const App = (): JSX.Element => {
 	return (
 		<ThemeProvider theme={theme}>
@@ -35,6 +39,9 @@ const App = (): JSX.Element => {
 				<Switch>
 					<Route exact path="/">
 						<HomePage />
+					</Route>
+					<Route exact path="/product/:id">
+						<ProductPage />
 					</Route>
 					<Route exact path="/search">
 						<SearchPage />
