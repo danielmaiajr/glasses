@@ -15,6 +15,12 @@ const HomePage = (): JSX.Element => {
 			<CarouselSection products={products} title="LIQUIDAÇÃO DE INVERNO" subtitle="ÓCULOS A PARTIR DE R$69,90" />
 			<CarouselDoubleSection products={products} title="Lentes Multifocal" subtitle="a partir de R$339" />
 			<CarouselSection products={products} title="MAIS VENDIDOS" subtitle="VEJA TODOS" />
+			<CarouselDoubleSection
+				products={products}
+				title="Lentes Multifocal"
+				subtitle="a partir de R$339"
+				direction="row-reverse"
+			/>
 		</div>
 	);
 };
