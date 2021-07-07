@@ -90,6 +90,34 @@ const theme: Theme = createMuiTheme({
 				}
 			}
 		}
+	},
+	typography: {
+		h2: {
+			fontSize: 24,
+			padding: '8px 0',
+			fontWeight: 500
+		},
+		h3: {
+			fontSize: 18,
+			lineHeight: '24px',
+			padding: '8px 0',
+			fontWeight: 500
+		},
+		h4: {
+			fontSize: 18,
+			lineHeight: '24px',
+			padding: '8px 0'
+		},
+		h5: {
+			fontSize: 14,
+			padding: '8px 0',
+			fontWeight: 700
+		},
+		h6: {
+			fontSize: 14,
+			padding: '8px 0',
+			alignItems: 'center'
+		}
 	}
 });
 
