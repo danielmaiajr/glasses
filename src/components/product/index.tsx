@@ -41,6 +41,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 		padding: 15
 	},
 	text: {
+		textAlign: 'center',
 		letterSpacing: 1,
 		padding: 2.5
 	},
