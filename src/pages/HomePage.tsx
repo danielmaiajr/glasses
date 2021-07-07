@@ -5,6 +5,7 @@ import CarouselSection from '../components/carousel_section';
 
 import { products } from '../components/product/data';
 import CarouselDoubleSection from '../components/carousel_double_section';
+import Footer from '../components/footer';
 
 const HomePage = (): JSX.Element => {
 	const classes = useStyles();
@@ -21,6 +22,7 @@ const HomePage = (): JSX.Element => {
 				subtitle="a partir de R$339"
 				direction="row-reverse"
 			/>
+			<Footer />
 		</div>
 	);
 };
