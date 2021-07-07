@@ -3,14 +3,14 @@ import { useState } from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { Container } from '@material-ui/core';
 
-import MyTextField from './MyTextField';
-import SearchIcon from '@material-ui/icons/Search';
+import SearchBar from '../search_bar';
 import MenuRoundedIcon from '@material-ui/icons/MenuRounded';
 
 import { ReactComponent as CartIcon } from './cart.svg';
 
 import BackpropMenu, { BackdropMenuType } from './backdrop';
 import Drawer from '../drawer';
+import { Link } from 'react-router-dom';
 
 const Menus: BackdropMenuType[] = [
 	{
@@ -58,18 +58,17 @@ const Navbar = (): JSX.Element => {
 					<button className={classes.menuIcon} onClick={OnClickMenu}>
 						<MenuRoundedIcon />
 					</button>
-					<div className={classes.logo}>Logo</div>
+					<Link to="/" className={classes.logo}>
+						Logo
+					</Link>
 				</div>
 
 				<div className={classes.search}>
-					<MyTextField id="filled-full-width" label="Pesquisar" margin="dense" variant="outlined" fullWidth />
-					<div className={classes.searchIcon}>
-						<SearchIcon fontSize="inherit" />
-					</div>
+					<SearchBar />
 				</div>
 
 				<div className={classes.navIcons}>
-					<div>Meu Perfil</div>
+					<div>Minha Conta</div>
 					<div className={classes.cartIcon} onClick={OnClickCart}>
 						<CartIcon style={{ width: 32, height: 32 }} />
 					</div>
@@ -113,31 +112,17 @@ const useStyles = makeStyles((theme: Theme) => ({
 		}
 	},
 	logo: {
+		color: '#FFF',
 		fontWeight: 'bold',
 		[theme.breakpoints.down('sm')]: {
 			marginLeft: 15
 		}
 	},
 	search: {
-		display: 'flex',
-		alignItems: 'center',
 		width: 450,
 		[theme.breakpoints.down('sm')]: {
 			display: 'none'
 		}
-	},
-	searchIcon: {
-		width: 55,
-		height: 38,
-		display: 'flex',
-		justifyContent: 'center',
-		alignItems: 'center',
-		backgroundColor: 'rgba(255, 255, 255, 0.17)',
-		marginLeft: 1,
-		marginTop: 4,
-		fontSize: 25,
-		color: '#AAA',
-		cursor: 'pointer'
 	},
 	navIcons: {
 		display: 'flex',

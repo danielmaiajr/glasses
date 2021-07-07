@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useWindowSize } from 'react-use';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -8,7 +8,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
 import { useSpring, useSprings, animated, config } from '@react-spring/web';
-import { useDrag } from 'react-use-gesture';
+import { useDrag } from '@use-gesture/react';
 
 import Dots from './dots';
 
@@ -16,6 +16,8 @@ import { clamp, ItemSlidesToShow, BreakpointTypes } from './_utils';
 
 interface PropTypes {
 	breakPoints?: BreakpointTypes[];
+	initialIndex?: number;
+	showDots?: boolean;
 	isInfinite?: boolean;
 	children: JSX.Element[];
 }
@@ -38,6 +40,8 @@ const Carousel = ({
 		{ width: 1450, itemsToShow: 3 },
 		{ width: 1750, itemsToShow: 3 }
 	],
+	initialIndex = 0,
+	showDots = false,
 	isInfinite = true,
 	children
 }: PropTypes): JSX.Element => {
@@ -99,8 +103,8 @@ const Carousel = ({
 	};
 
 	const OnDrag = useDrag(
-		({ active, args: [ index ], movement: [ mx ], direction: [ xDir ], distance }) => {
-			if (!active && distance > 5) SetCurrentIndex(-xDir);
+		({ event, active, args: [ index ], movement: [ mx ], direction: [ xDir ], distance: [ xDist ], tap }) => {
+			if (!active && xDist > 10) SetCurrentIndex(-xDir);
 			AnimateXPosition(active, mx);
 
 			newSpring.start((i) => {
@@ -108,9 +112,10 @@ const Carousel = ({
 				return { scale: active && i === index ? 1.1 : 1, opacity: active && i !== index ? 0.5 : 1 };
 			});
 		},
-		{ axis: 'x' }
+		{ axis: 'x', filterTaps: true }
 	);
 
+	useEffect(() => OnDotClick(initialIndex), [ initialIndex ]);
 	console.log('carousel rendered...');
 
 	//-------------------------------------------------
@@ -121,18 +126,38 @@ const Carousel = ({
 			<div className={classes.sliderWrapper}>
 				<animated.div className={classes.slider} style={styles} ref={carouselWidth}>
 					{newStyles.map((styles, i) => (
-						<animated.div style={styles} key={i} className={classes.slide} {...OnDrag(i)}>
+						<animated.div
+							style={styles}
+							key={i}
+							className={classes.slide}
+							{...OnDrag(i)}
+							onDragStart={(e) => e.preventDefault()}
+						>
 							{children[i]}
 						</animated.div>
 					))}
 				</animated.div>
 
-				<IconButton className={classes.minusButton} size="small" disableRipple onClick={() => OnClick(-1)}>
-					<ChevronLeftIcon />
-				</IconButton>
-				<IconButton className={classes.plusButton} size="small" disableRipple onClick={() => OnClick(1)}>
-					<ChevronRightIcon />
-				</IconButton>
+				{showDots ? (
+					<React.Fragment>
+						<IconButton
+							className={classes.minusButton}
+							size="small"
+							disableRipple
+							onClick={() => OnClick(-1)}
+						>
+							<ChevronLeftIcon />
+						</IconButton>
+						<IconButton
+							className={classes.plusButton}
+							size="small"
+							disableRipple
+							onClick={() => OnClick(1)}
+						>
+							<ChevronRightIcon />
+						</IconButton>
+					</React.Fragment>
+				) : null}
 			</div>
 
 			<Dots numberOfDots={numberOfSlides} index={indexState} OnClick={OnDotClick} />
@@ -160,14 +185,13 @@ const useCarouselStyles = makeStyles({
 	slider: {
 		display: 'grid',
 		gridTemplateColumns: (props: UseCarouselStylesProps) =>
-			`repeat(${props.numberOfIndexs}, calc(100% / ${props.numberOfItemSlides}))`,
-		touchAction: 'pan-y',
-		userSelect: 'none'
+			`repeat(${props.numberOfIndexs}, calc(100% / ${props.numberOfItemSlides}))`
 	},
 	slide: {
 		display: 'flex',
 		justifyContent: 'center',
-		padding: '0 10px'
+		padding: '0 10px',
+		touchAction: 'pan-y'
 	},
 	minusButton: {
 		position: 'absolute',

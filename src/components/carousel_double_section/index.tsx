@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import { Container, Grid } from '@material-ui/core';
+import { Container, Grid, GridDirection } from '@material-ui/core';
 
 import Carousel from '../carousel';
 import Product from '../product';
@@ -11,28 +11,31 @@ interface PropTypes {
 	title: string;
 	subtitle: string;
 	products: ProductType[];
+	direction?: GridDirection;
 }
 
-const CarouselDoubleSection = ({ title, subtitle, products }: PropTypes): JSX.Element => {
+const CarouselDoubleSection = ({ title, subtitle, products, direction }: PropTypes): JSX.Element => {
 	const classes = useStyles();
 
 	return (
-		<Container>
+		<React.Fragment>
 			<div className={classes.titleWrapper}>
 				<div className={classes.title}>{title}</div>
 				<div className={classes.subtitle}>{subtitle}</div>
 			</div>
-			<Grid container spacing={5} style={{ padding: '30px 0' }} direction="row-reverse">
-				<Grid item xs={6}>
-					<div className={classes.image} />
+			<Container style={{ padding: 20 }}>
+				<Grid container spacing={5} direction={direction}>
+					<Grid item xs={12} md={6}>
+						<div className={classes.image} />
+					</Grid>
+					<Grid item xs={12} md={6}>
+						<Carousel breakPoints={[ { width: 1, itemsToShow: 1 } ]}>
+							{products.map((prod, i) => <Product data={prod} key={i} />)}
+						</Carousel>
+					</Grid>
 				</Grid>
-				<Grid item xs={6}>
-					<Carousel breakPoints={[ { width: 1, itemsToShow: 1 } ]}>
-						{products.map((prod, i) => <Product data={prod} key={i} />)}
-					</Carousel>
-				</Grid>
-			</Grid>
-		</Container>
+			</Container>
+		</React.Fragment>
 	);
 };
 

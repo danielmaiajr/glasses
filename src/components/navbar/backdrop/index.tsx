@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
+import { Container } from '@material-ui/core';
 
 import { useTransition, useSpring, animated, config } from '@react-spring/web';
 import { useHover } from 'react-use-gesture';
@@ -74,7 +75,9 @@ const BackpropMenu = ({ menu }: PropTypes): JSX.Element => {
 							<animated.div style={{ height }} className={classes.backdropWrapper}>
 								{indexTransitions(({ opacity }) => (
 									<animated.div style={{ opacity }} className={classes.backdropContent}>
-										{menu[index].content}
+										<Container>
+											<React.Fragment>{menu[index].content}</React.Fragment>
+										</Container>
 									</animated.div>
 								))}
 							</animated.div>
@@ -132,6 +135,6 @@ const useStyles = makeStyles((theme: Theme) => ({
 		zIndex: 1000
 	},
 	backdropContent: {
-		padding: '20px 40px'
+		padding: '20px'
 	}
 }));
