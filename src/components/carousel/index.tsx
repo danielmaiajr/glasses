@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useWindowSize } from 'react-use';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -16,6 +16,8 @@ import { clamp, ItemSlidesToShow, BreakpointTypes } from './_utils';
 
 interface PropTypes {
 	breakPoints?: BreakpointTypes[];
+	initialIndex?: number;
+	showDots?: boolean;
 	isInfinite?: boolean;
 	children: JSX.Element[];
 }
@@ -38,6 +40,8 @@ const Carousel = ({
 		{ width: 1450, itemsToShow: 3 },
 		{ width: 1750, itemsToShow: 3 }
 	],
+	initialIndex = 0,
+	showDots = false,
 	isInfinite = true,
 	children
 }: PropTypes): JSX.Element => {
@@ -100,7 +104,7 @@ const Carousel = ({
 
 	const OnDrag = useDrag(
 		({ event, active, args: [ index ], movement: [ mx ], direction: [ xDir ], distance: [ xDist ], tap }) => {
-			if (!active && xDist > 5) SetCurrentIndex(-xDir);
+			if (!active && xDist > 10) SetCurrentIndex(-xDir);
 			AnimateXPosition(active, mx);
 
 			newSpring.start((i) => {
@@ -111,6 +115,7 @@ const Carousel = ({
 		{ axis: 'x', filterTaps: true }
 	);
 
+	useEffect(() => OnDotClick(initialIndex), [ initialIndex ]);
 	console.log('carousel rendered...');
 
 	//-------------------------------------------------
@@ -133,12 +138,26 @@ const Carousel = ({
 					))}
 				</animated.div>
 
-				<IconButton className={classes.minusButton} size="small" disableRipple onClick={() => OnClick(-1)}>
-					<ChevronLeftIcon />
-				</IconButton>
-				<IconButton className={classes.plusButton} size="small" disableRipple onClick={() => OnClick(1)}>
-					<ChevronRightIcon />
-				</IconButton>
+				{showDots ? (
+					<React.Fragment>
+						<IconButton
+							className={classes.minusButton}
+							size="small"
+							disableRipple
+							onClick={() => OnClick(-1)}
+						>
+							<ChevronLeftIcon />
+						</IconButton>
+						<IconButton
+							className={classes.plusButton}
+							size="small"
+							disableRipple
+							onClick={() => OnClick(1)}
+						>
+							<ChevronRightIcon />
+						</IconButton>
+					</React.Fragment>
+				) : null}
 			</div>
 
 			<Dots numberOfDots={numberOfSlides} index={indexState} OnClick={OnDotClick} />
