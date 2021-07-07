@@ -7,12 +7,12 @@ import Product from '../product';
 import { ProductType } from '../product/data';
 
 interface PropTypes {
-	title: string;
-	subtitle: string;
+	title?: string | null;
+	subtitle?: string | null;
 	products: ProductType[];
 }
 
-const CarouselSection = ({ title, subtitle, products }: PropTypes): JSX.Element => {
+const CarouselSection = ({ title = null, subtitle = null, products }: PropTypes): JSX.Element => {
 	const classes = useStyles();
 
 	return (
