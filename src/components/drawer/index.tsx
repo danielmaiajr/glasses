@@ -42,7 +42,7 @@ export default Drawer;
 
 const useStyles = makeStyles({
 	wrapper: {
-		position: 'absolute',
+		position: 'fixed',
 		inset: 0,
 		overflow: 'hidden',
 		zIndex: 1001
@@ -53,7 +53,7 @@ const useStyles = makeStyles({
 		background: 'rgba(238,238,238,.7)'
 	},
 	drawer: {
-		position: 'absolute',
+		position: 'fixed',
 		top: 0,
 		padding: '30px 50px',
 		maxWidth: CART_WIDTH,
