@@ -35,10 +35,10 @@ const useStyles = makeStyles((theme: Theme) => ({
 		bottom: 0,
 		left: 0,
 		width: '100%',
+		height: 55,
 		display: 'none',
 		padding: 5,
-		borderTop: '1px solid #CCC',
-		backgroundColor: '#FFF',
+		backgroundColor: '#000',
 		zIndex: 1000,
 		[theme.breakpoints.down('sm')]: {
 			display: 'flex'
@@ -50,10 +50,10 @@ const useStyles = makeStyles((theme: Theme) => ({
 		flexDirection: 'column',
 		alignItems: 'center',
 		justifyContent: 'center',
-		color: '#888'
+		color: '#555'
 	},
 	activeTab: {
-		color: '#000',
+		color: '#FFF',
 		fontWeight: 'bold'
 	},
 	label: {
