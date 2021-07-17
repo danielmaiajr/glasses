@@ -21,7 +21,13 @@ const ProductPage = (): JSX.Element => {
 	const { id } = useParams<{ id: string }>();
 	const [ product, setProduct ] = useState<ProductType | null>(null);
 
-	useEffect(() => setProduct(products[0]), []);
+	useEffect(
+		() => {
+			const test = products.filter((prod) => prod.id === id);
+			setProduct(test[0]);
+		},
+		[ id ]
+	);
 
 	return (
 		<div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { useWindowSize } from 'react-use';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -76,31 +76,43 @@ const Carousel = ({
 
 	//-------------------------------------------------
 	//Utility function SETINDEX AND ANIMATION
-	const SetCurrentIndex = (xDir: number): void => {
-		setIndexState(clamp(index.current + xDir, 0, numberOfSlides - 1));
-		index.current = clamp(index.current + xDir, 0, numberOfSlides - 1);
-	};
+	const SetCurrentIndex = useCallback(
+		(xDir: number): void => {
+			setIndexState(clamp(index.current + xDir, 0, numberOfSlides - 1));
+			index.current = clamp(index.current + xDir, 0, numberOfSlides - 1);
+		},
+		[ numberOfSlides ]
+	);
 
-	const AnimateXPosition = (dragMode: boolean = false, dragXOffset?: any): void => {
-		spring.start({
-			x:
-				-index.current * (carouselWidth.current ? carouselWidth.current.clientWidth : 0) +
-				(dragMode ? dragXOffset : 0)
-		});
-	};
+	const AnimateXPosition = useCallback(
+		(dragMode: boolean = false, dragXOffset?: any): void => {
+			spring.start({
+				x:
+					-index.current * (carouselWidth.current ? carouselWidth.current.clientWidth : 0) +
+					(dragMode ? dragXOffset : 0)
+			});
+		},
+		[ spring ]
+	);
 
 	//-------------------------------------------------
 	//Function events ONCLICK AND DRAG
-	const OnClick = (xDir: number): void => {
-		SetCurrentIndex(xDir);
-		AnimateXPosition();
-	};
+	const OnClick = useCallback(
+		(xDir: number): void => {
+			SetCurrentIndex(xDir);
+			AnimateXPosition();
+		},
+		[ AnimateXPosition, SetCurrentIndex ]
+	);
 
-	const OnDotClick = (i: number): void => {
-		setIndexState(clamp(i, 0, numberOfSlides - 1));
-		index.current = clamp(i, 0, numberOfSlides - 1);
-		AnimateXPosition();
-	};
+	const OnDotClick = useCallback(
+		(i: number): void => {
+			setIndexState(clamp(i, 0, numberOfSlides - 1));
+			index.current = clamp(i, 0, numberOfSlides - 1);
+			AnimateXPosition();
+		},
+		[ AnimateXPosition, numberOfSlides ]
+	);
 
 	const OnDrag = useDrag(
 		({ event, active, args: [ index ], movement: [ mx ], direction: [ xDir ], distance: [ xDist ], tap }) => {
@@ -115,7 +127,7 @@ const Carousel = ({
 		{ axis: 'x', filterTaps: true }
 	);
 
-	useEffect(() => OnDotClick(initialIndex), [ initialIndex ]);
+	useEffect(() => OnDotClick(initialIndex), [ initialIndex, OnDotClick ]);
 	console.log('carousel rendered...');
 
 	//-------------------------------------------------

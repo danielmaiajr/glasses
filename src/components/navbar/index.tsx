@@ -11,6 +11,9 @@ import { ReactComponent as CartIcon } from './cart.svg';
 import BackpropMenu, { BackdropMenuType } from './backdrop';
 import Drawer from '../drawer';
 import { Link } from 'react-router-dom';
+import Cart from '../cart';
+import { useSelector, useDispatch } from 'react-redux';
+import { changeShowCart } from '../../redux/actions/cartActions';
 
 const Menus: BackdropMenuType[] = [
 	{
@@ -45,11 +48,14 @@ const Menus: BackdropMenuType[] = [
 
 const Navbar = (): JSX.Element => {
 	const classes = useStyles();
+	const dispatch = useDispatch();
+
+	const { showCart } = useSelector((state: any) => state.cart);
 
 	const [ showMenu, setShowMenu ] = useState<boolean>(false);
-	const [ showCart, setShowCart ] = useState<boolean>(false);
+
 	const OnClickMenu: React.MouseEventHandler = (): void => setShowMenu(!showMenu);
-	const OnClickCart: React.MouseEventHandler = (): void => setShowCart(!showCart);
+	const OnClickCart: React.MouseEventHandler = () => dispatch(changeShowCart());
 
 	return (
 		<div className={classes.wrapper}>
@@ -81,7 +87,7 @@ const Navbar = (): JSX.Element => {
 				Menu
 			</Drawer>
 			<Drawer show={showCart} onBackDropClick={OnClickCart}>
-				CART
+				<Cart />
 			</Drawer>
 		</div>
 	);

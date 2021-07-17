@@ -55,7 +55,6 @@ const useStyles = makeStyles({
 	drawer: {
 		position: 'fixed',
 		top: 0,
-		padding: '30px 50px',
 		maxWidth: CART_WIDTH,
 		width: '85%',
 		height: '100vh',

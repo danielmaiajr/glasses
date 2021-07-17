@@ -1,8 +1,9 @@
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
-import { Container, Button } from '@material-ui/core';
-
 import { ProductType } from '../../components/product/data';
+
+import { useDispatch } from 'react-redux';
+import { addItemsCart, changeShowCart } from '../../redux/actions/cartActions';
 
 interface PropTypes {
 	product: ProductType;
@@ -10,6 +11,12 @@ interface PropTypes {
 
 const Description = ({ product }: PropTypes) => {
 	const classes = useStyles();
+	const dispatch = useDispatch();
+
+	const HandleAddToCart = (id: any) => {
+		dispatch(addItemsCart(id));
+		dispatch(changeShowCart());
+	};
 
 	return (
 		<div className={classes.wrapper}>
@@ -23,7 +30,9 @@ const Description = ({ product }: PropTypes) => {
 			<div className={classes.price}>R$ {product.price},00</div>
 			<div className={classes.descountPrice}>R$ {product.descountPrice},00</div>
 			<div className={classes.debitPrice}>R$ {product.debitPrice},00</div>
-			<button className={classes.button}>Adicionar</button>
+			<button className={classes.button} onClick={() => HandleAddToCart(product)}>
+				Adicionar
+			</button>
 			<div className={classes.a}>7 DIAS PARA TROCA OU DEVOLUÇÃO GRÁTIS</div>
 			<div className={classes.b}>Política de troca e devolução</div>
 		</div>
